@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 
-import Spinner from './Spinner'; // Import the Spinner component
+import Spinner from './Spinner';
 
 const API_BASE_URL = 'https://api.quran.gading.dev';
 
@@ -14,14 +14,14 @@ export function App() {
   const [currentSurah, setCurrentSurah] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchSurahList();
   }, []);
 
   const fetchSurahList = async () => {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/surah`);
       const result = await response.json();
@@ -33,12 +33,12 @@ export function App() {
     } catch (error) {
       console.error('Error fetching Surah list:', error);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
   const fetchSurah = async (surahNumber) => {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/surah/${surahNumber}`);
       const result = await response.json();
@@ -53,7 +53,7 @@ export function App() {
     } catch (error) {
       console.error('Error fetching Surah:', error);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
@@ -62,11 +62,16 @@ export function App() {
     surah.name.translation.id.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const getSurahColor = (index) => {
+    const colors = ['bg-blue-100', 'bg-green-100', 'bg-yellow-100', 'bg-pink-100', 'bg-purple-100'];
+    return colors[index % colors.length];
+  };
+
   return (
     <div className="App bg-gray-100 text-gray-900">
       <header className="bg-green-600 p-4 text-white header-fixed">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Al-Quran Digital- By Ugun</h1>
+          <h1 className="text-2xl font-semibold">Al-Quran Digital</h1>
           <input
             type="text"
             id="search-input"
@@ -78,20 +83,21 @@ export function App() {
       </header>
 
       <main className="container mx-auto my-8 p-4">
-        {loading ? ( // Show spinner while loading
+        {loading ? (
           <Spinner />
         ) : (
           <div className="flex flex-col lg:flex-row">
             <aside className="w-full lg:w-1/4 bg-white shadow-lg p-4 rounded mb-4 lg:mb-0 lg:mr-4 lg:mt-10">
-              <h2 className="text-lg font-semibold mb-4">Daftar Surat</h2>
+              <h2 className="text-lg font-semibold mb-4 mt-10">Daftar Surat</h2>
               <ul className="space-y-2">
-                {filteredSurah.map(surah => (
+                {filteredSurah.map((surah, index) => (
                   <li
                     key={surah.number}
-                    className="cursor-pointer hover:bg-gray-100 p-2 rounded"
+                    className={`cursor-pointer p-4 rounded-lg shadow-md ${getSurahColor(index)}`}
                     onClick={() => fetchSurah(surah.number)}
                   >
-                    {surah.number}. {surah.name.transliteration.id}
+                    <p className="text-lg font-bold">{surah.number}. {surah.name.transliteration.id}</p>
+                    <p className="text-sm text-gray-600">{surah.name.translation.id}</p>
                   </li>
                 ))}
               </ul>
@@ -102,9 +108,11 @@ export function App() {
               </h2>
               {currentSurah && (
                 <div className="space-y-4">
-                  {currentSurah.verses.map(ayah => (
+                  {currentSurah.verses.map((ayah) => (
                     <div key={ayah.number.inSurah} className="p-4 bg-gray-100 rounded shadow-sm mb-2">
-                      <p className="text-right font-semibold text-xl mb-2">{ayah.number.inSurah}. {ayah.text.arab}</p>
+                      <p className="text-right text-xl mb-2">
+                        {ayah.number.inSurah}. <span className="arabic-text">{ayah.text.arab}</span>
+                      </p>
                       <p className="text-sm text-gray-600">{ayah.translation.id}</p>
                     </div>
                   ))}
@@ -123,9 +131,11 @@ export function App() {
               <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700">&times;</button>
             </div>
             <div className="max-h-80 overflow-y-auto p-4">
-              {currentSurah?.verses.map(ayah => (
+              {currentSurah.verses.map((ayah) => (
                 <div key={ayah.number.inSurah} className="p-4 bg-gray-100 rounded shadow-sm mb-2">
-                  <p className="text-right font-semibold text-xl mb-2">{ayah.number.inSurah}. {ayah.text.arab}</p>
+                  <p className="text-right text-xl mb-2">
+                    {ayah.number.inSurah}. <span className="arabic-text">{ayah.text.arab}</span>
+                  </p>
                   <p className="text-sm text-gray-600">{ayah.translation.id}</p>
                 </div>
               ))}
@@ -134,11 +144,21 @@ export function App() {
         </div>
       )}
 
-      <footer className="bg-gray-200 p-4 text-center">
-        <p className="text-sm">Sumber API dari <a href="https://github.com/gadingnst/quran-api" className="text-blue-600" target="_blank" rel="noopener noreferrer">Gading Dev</a></p>
+      <footer className="bg-gray-200 p-6 text-center border-t">
+        <p className="text-sm mb-2">
+          Sumber API dari{' '}
+          <a href="https://github.com/gadingnst/quran-api" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+            Gading Dev
+          </a>
+        </p>
+        <div className="flex items-center justify-center space-x-2">
+          <p className="text-sm font-medium text-gray-700">Dibuat oleh Gugun Gunawan, S.Kom</p>
+        </div>
       </footer>
+
     </div>
   );
 }
 
 export default App;
+
