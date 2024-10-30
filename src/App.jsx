@@ -66,7 +66,7 @@ export function App() {
     <div className="App bg-gray-100 text-gray-900">
       <header className="bg-green-600 p-4 text-white header-fixed">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Al-Quran Digital</h1>
+          <h1 className="text-2xl font-semibold">Al-Quran Digital- By Ugun</h1>
           <input
             type="text"
             id="search-input"
