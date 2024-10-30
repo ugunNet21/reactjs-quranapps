@@ -6,3 +6,10 @@
   color: black;
   border-color: #ffeb3b;
 }
+.header-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10; /* Ensures the header stays above other content */
+}
