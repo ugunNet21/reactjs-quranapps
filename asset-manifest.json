@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/reactjs-quranapps/static/css/main.2bc61101.css",
+    "main.js": "/reactjs-quranapps/static/js/main.e4746d5d.js",
+    "index.html": "/reactjs-quranapps/index.html",
+    "main.2bc61101.css.map": "/reactjs-quranapps/static/css/main.2bc61101.css.map",
+    "main.e4746d5d.js.map": "/reactjs-quranapps/static/js/main.e4746d5d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2bc61101.css",
+    "static/js/main.e4746d5d.js"
+  ]
+}
