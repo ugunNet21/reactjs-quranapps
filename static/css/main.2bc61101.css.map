@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/main.2bc61101.css","mappings":"AAAA,WACE,wBACF,CAEA,cAEE,oBAAqB,CADrB,UAEF","sources":["App.css"],"sourcesContent":[".highlight {\n  background-color: #ffeb3b;\n}\n\n#search-input {\n  color: black;\n  border-color: #ffeb3b;\n}\n"],"names":[],"sourceRoot":""}
