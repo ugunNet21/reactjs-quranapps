@@ -2,6 +2,22 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Build android
+
+```` npm run build
+````
+
+````
+cp -r build/* ~/Projects/React/quran-app/cordova/www/
+
+````
+
+````
+cd ~/Projects/React/quran-app/cordova
+cordova build android
+
+````
+
 ## Available Scripts
 
 In the project directory, you can run:
